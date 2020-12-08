@@ -19,6 +19,13 @@ Click "Next" on the next screen ("Local Destination").
 (6) On the next screen ("Import Projects from File System or Archive"), select 
 "CardTest/NewCardTest", and deselect "CardTest".  Click "Finish".
 
+(7) Create two new folders under the "src" directory in the new project: "src/main/java" 
+and "src/main/resources".  
+
+(8) Right click on the project.  Select "Properties".  Select "Java Build Path" in the left column.
+Click on "Select All" button on the right of the screen to include the JRE System Library and
+Maven Dependencies.  Click "Apply and Close" to close the screen.
+
 (7) Build the project by clicking on Project, and selecting "Build Project"
 
 (8) Run the project by right-clicking on "CardTestSuite.java" (under "Demo.CardTest" package, 
