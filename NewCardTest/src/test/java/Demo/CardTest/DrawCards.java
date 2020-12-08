@@ -4,9 +4,8 @@ package Demo.CardTest;
 
 import static org.junit.Assert.*;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 
 import junit.framework.TestCase;
 import net.minidev.json.JSONObject;
@@ -34,7 +33,7 @@ public class DrawCards extends TestCase{
     
 
 	@Test
-	public void test() throws Exception{
+	public void test() throws Exception {
 		String deck_id = NewDeck.getNewDeck(false);
 		int expectedRemainingCards = 52;		
 		for (int i=1; i<5; i++) {
