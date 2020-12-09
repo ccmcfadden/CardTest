@@ -1,32 +1,16 @@
 package Demo.CardTest;
 
-import static org.junit.Assert.*;
-
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import junit.framework.TestCase;
-import net.minidev.json.JSONObject;
 import io.restassured.RestAssured;
-import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-
-import io.restassured.http.Headers;
-import io.restassured.http.Header;
-import io.restassured.response.ResponseBody;
-import java.io.IOException;
-
 import io.restassured.path.json.JsonPath;
 
 
 public class NewDeck extends TestCase{
 
-	private static ChromeDriver driver;
+	public static final String PATH = "/new/";
 
 	
     public NewDeck( String testName )
@@ -34,44 +18,26 @@ public class NewDeck extends TestCase{
         super( testName );
     }
     
-
 	@Test
 	public void test() throws Exception {
 		//the boolean parameter passed is jokers_enabled
-		String deck_id = getNewDeck(false);
-		deck_id = getNewDeck(true);
-		//this test has been failing - access is forbidden (Error code 403)
+		getNewDeck(false);
+		getNewDeck(true);
 	}//end test method
 	
 	
 	public static String getNewDeck(boolean jokers_enabled) throws Exception {
-		System.out.println("***** GET Request is being evaluated with Jokers enabled : "+jokers_enabled+" ******");
+		if (jokers_enabled)
+			System.out.println("***** GET Request is being evaluated with Jokers enabled ******");
+		else
+			System.out.println("***** GET Request is being evaluated with Jokers *not* enabled ******");
+
 		RestAssured.baseURI = "https://deckofcardsapi.com/api/deck";
 		RequestSpecification httpRequest = RestAssured.given();
-		Response response = httpRequest.queryParam("jokers_enabled", jokers_enabled).get("/new/");
+		Response response = httpRequest.queryParam("jokers_enabled", jokers_enabled).get(PATH);
 		
-		String responseBody = response.getBody().asString();
-		System.out.println("Response Body is =>  " + responseBody);
-		
-		int statusCode = response.getStatusCode();
-		assertEquals("Incorrect status code received: "+statusCode, 200, statusCode);
-		String statusLine = response.getStatusLine();
-		assertEquals("Incorrect status line received: "+statusLine, "HTTP/1.1 200 OK", statusLine);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("*** EVALUATING HEADER ***");
-
-
-		String contentType = response.header("Content-Type");
-		System.out.println("Response Header Content Type is "+contentType);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("*** EVALUATING BODY ***");
-		
-		ResponseBody body = response.getBody();
-		System.out.println("Response Body is: " + body.asString());
+		assertEquals("Incorrect status code received: "+response.getStatusCode(), CardTestSuite.OK_StatusCode, response.getStatusCode());
+		assertEquals("Incorrect status line received: "+response.getStatusLine(), CardTestSuite.OK_StatusMessage, response.getStatusLine());
 		
 		JsonPath jsonPathEvaluator = response.jsonPath();
 		Boolean success = jsonPathEvaluator.get("success");
@@ -84,11 +50,12 @@ public class NewDeck extends TestCase{
 		int expectedRemainingCards = 52;
 		if (jokers_enabled)
 			expectedRemainingCards = 54;
-		Integer actualRemainingCards = jsonPathEvaluator.get("remaining");
-		System.out.println("Actual Remaining Cards: "+actualRemainingCards.intValue());
-		assertEquals("Incorrect number of cards remaining: "+actualRemainingCards.intValue(), expectedRemainingCards, actualRemainingCards.intValue());
+		int actualRemainingCards = ((Integer)jsonPathEvaluator.get("remaining")).intValue();
+		assertEquals("Incorrect number of cards remaining: "+actualRemainingCards, expectedRemainingCards, actualRemainingCards);
+		//if it doesn't fail before this point, it passes - just output the number of remaining cards
+		System.out.println("Number of Cards Remaining in the deck is "+actualRemainingCards+", as expected");
 		
 		return deck_id;
-	}
+	}//end method getNewDeck
 
 }//end test class
