@@ -7,7 +7,12 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.path.json.JsonPath;
 
-
+/*
+ * Of note, this Class is a bona fide test class in and of itself, but its methods are 
+ * used by the DrawCards class when testing as well.  This is run initially by itself
+ * to verify that it is working properly before the DrawCards tests are run,
+ * as the DrawCards tests depend upon this working properly.  
+ */
 public class NewDeck extends TestCase{
 
 	public static final String PATH = "/new/";

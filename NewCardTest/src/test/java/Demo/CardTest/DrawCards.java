@@ -21,6 +21,7 @@ public class DrawCards extends TestCase{
 
 	@Test
 	public void test() throws Exception {
+		//the goal will be to run this with all four possible combinations of jokers_enabled and isShuffled
 		boolean[] jokers_enabled = {true, false, false, true};
 		for (int i=0; i<jokers_enabled.length; i++) {
 			JsonPath jsonPathEvaluator = NewDeck.getNewDeck(jokers_enabled[i]);
@@ -30,18 +31,18 @@ public class DrawCards extends TestCase{
 				isShuffled = shuffleCards(deck_id);
 			else 
 				isShuffled = false;
-			int expectedRemainingCards = 52;
-			int expectedValue = 0;
+			int expectedRemainingCards = 52;//this is the number of cards jokers_enabled = false
+			int expectedValue = 0;//this is the value of the card - ACE, 2, etc... initialize placeholder
 			if (jokers_enabled[i])
 				expectedRemainingCards = 54;
-			for (int j=1; j<5; j++) {
+			for (int j=1; j<5; j++) {//draw different numbers of cards, from 1 card to 4 cards
 				expectedRemainingCards-=j;
 				jsonPathEvaluator = drawCards(deck_id, j);
 				verifyCardsRemaining(expectedRemainingCards, jsonPathEvaluator);
 				ArrayList<HashMap<String, String>> cards 
 					= (ArrayList<HashMap<String, String>>)jsonPathEvaluator.get("cards");
 				verifyCardsDrawn(j, cards);
-				if (! isShuffled) {
+				if (! isShuffled) {//only verify suit uniformity and order if it's not shuffled
 					verifySuitUniformity(cards);
 					expectedValue = verifySuitOrder(cards, expectedValue);
 				}//end if - the deck is not shuffled
