@@ -59,12 +59,6 @@
 </dependency>
     
 	<dependency>
-		<groupId>org.apache.poi</groupId>
-		<artifactId>poi</artifactId>
-		<version>3.16</version>
-		<scope>test</scope>
-	</dependency>
-	<dependency>
 		<groupId>org.seleniumhq.selenium</groupId>
 		<artifactId>selenium-java</artifactId>
 		<version>3.9.1</version>
@@ -94,79 +88,17 @@
 		<artifactId>operadriver</artifactId>
 		<version>1.1</version>
 	</dependency>
-	<dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-lang3</artifactId>
-        <version>3.0</version>
-    </dependency>
-	<dependency>
-		<groupId>org.apache.poi</groupId>
-		<artifactId>poi-ooxml</artifactId>
-		<version>3.16</version>
-	</dependency>
 	    <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-firefox-driver</artifactId>
         <version>3.9.1</version>
     </dependency>
-    <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-        <version>4.3.5</version>
-    </dependency>
-    <dependency>
-		<groupId>commons-logging</groupId>
-		<artifactId>commons-logging</artifactId>
-		<version>1.2</version>
-	</dependency>
-    <dependency>
-        <groupId>org.apache.pdfbox</groupId>
-        <artifactId>pdfbox</artifactId>
-        <version>2.0.13</version>
-    </dependency>
-      <dependency> 
-         <groupId>org.apache.pdfbox</groupId> 
-         <artifactId>fontbox</artifactId> 
-         <version>2.0.0</version> 
-      </dependency>     
-      <dependency>  
-         <groupId>org.apache.pdfbox</groupId> 
-         <artifactId>jempbox</artifactId> 
-         <version>1.8.11</version> 
-      </dependency> 
-      <dependency>
-         <groupId>org.apache.pdfbox</groupId> 
-         <artifactId>xmpbox</artifactId> 
-         <version>2.0.0</version> 
-      </dependency> 
-      <dependency> 
-         <groupId>org.apache.pdfbox</groupId> 
-         <artifactId>preflight</artifactId> 
-         <version>2.0.0</version> 
-      </dependency> 
-      <dependency> 
-         <groupId>org.apache.pdfbox</groupId> 
-         <artifactId>pdfbox-tools</artifactId> 
-         <version>2.0.0</version> 
-      </dependency> 
       
-      <dependency>
-	  <groupId>org.dbunit</groupId>
-	  <artifactId>dbunit</artifactId>
-	  <version>2.4.9</version>
-	  <scope>test</scope>
-	</dependency>
     <dependency>
     	<groupId>pl.pragmatists</groupId>
     	<artifactId>JUnitParams</artifactId>
     	<version>1.0.5</version>
     	<scope>test</scope>
     </dependency>
-   <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad -->
-	<dependency>
-	    <groupId>org.apache.poi</groupId>
-	    <artifactId>poi-scratchpad</artifactId>
-	    <version>3.2-FINAL</version>
-	</dependency>
    </dependencies>
 </project>

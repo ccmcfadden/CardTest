@@ -9,6 +9,7 @@ public class CardTestSuite extends TestCase {
 	
 	public static final int OK_StatusCode = 200;
 	public static final String OK_StatusMessage = "HTTP/1.1 200 OK";
+	public static final String BASE_URI = "https://deckofcardsapi.com/api/deck";
 	
     public CardTestSuite( String testName ){
         super( testName );

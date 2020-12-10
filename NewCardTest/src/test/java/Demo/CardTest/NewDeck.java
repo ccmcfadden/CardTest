@@ -20,19 +20,22 @@ public class NewDeck extends TestCase{
     
 	@Test
 	public void test() throws Exception {
-		//the boolean parameter passed is jokers_enabled
-		getNewDeck(false);
-		getNewDeck(true);
+		boolean jokers_enabled[] = {false, true};
+		for (int i=0; i<jokers_enabled.length; i++) {
+			JsonPath jsonPathEvaluator = getNewDeck(jokers_enabled[i]);
+			getDeckID(jsonPathEvaluator);
+			evaluateRemainingCards(jsonPathEvaluator, jokers_enabled[i]);
+		}//end for loop
 	}//end test method
 	
 	
-	public static String getNewDeck(boolean jokers_enabled) throws Exception {
+	public static JsonPath getNewDeck(boolean jokers_enabled) throws Exception {
 		if (jokers_enabled)
 			System.out.println("***** GET Request is being evaluated with Jokers enabled ******");
 		else
 			System.out.println("***** GET Request is being evaluated with Jokers *not* enabled ******");
 
-		RestAssured.baseURI = "https://deckofcardsapi.com/api/deck";
+		RestAssured.baseURI = CardTestSuite.BASE_URI;//"https://deckofcardsapi.com/api/deck";
 		RequestSpecification httpRequest = RestAssured.given();
 		Response response = httpRequest.queryParam("jokers_enabled", jokers_enabled).get(PATH);
 		
@@ -40,13 +43,16 @@ public class NewDeck extends TestCase{
 		assertEquals("Incorrect status line received: "+response.getStatusLine(), CardTestSuite.OK_StatusMessage, response.getStatusLine());
 		
 		JsonPath jsonPathEvaluator = response.jsonPath();
-		Boolean success = jsonPathEvaluator.get("success");
-		System.out.println("Success: "+success.toString());
-		assertEquals("Incorrect success status received: "+success.toString(), "true", success.toString());
-		
+		return jsonPathEvaluator;
+	}//end method getNewDeck
+	
+	public static String getDeckID(JsonPath jsonPathEvaluator) throws Exception{
 		String deck_id = jsonPathEvaluator.get("deck_id");
 		System.out.println("Deck ID: "+deck_id);
-		
+		return deck_id;
+	}//end getDeckID method
+	
+	public void evaluateRemainingCards(JsonPath jsonPathEvaluator, boolean jokers_enabled) throws Exception{
 		int expectedRemainingCards = 52;
 		if (jokers_enabled)
 			expectedRemainingCards = 54;
@@ -55,7 +61,6 @@ public class NewDeck extends TestCase{
 		//if it doesn't fail before this point, it passes - just output the number of remaining cards
 		System.out.println("Number of Cards Remaining in the deck is "+actualRemainingCards+", as expected");
 		
-		return deck_id;
-	}//end method getNewDeck
+	}//end evaluateRemainingCards method
 
 }//end test class
