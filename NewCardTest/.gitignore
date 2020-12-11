@@ -1,1 +1,6 @@
+# We will have Git ignore both the target and CardTest.Demo directories
+/Demo.CardTest/
 /target/
+
+# This one file will be an exception to the exclusion.  It explains the directory.
+!/Demo.CardTest/Note.txt
